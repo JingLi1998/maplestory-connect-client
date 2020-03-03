@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 
+import Smega from '../components/Smega';
+
 export class home extends Component {
   state = {
     smegas: null
@@ -13,18 +15,19 @@ export class home extends Component {
         this.setState({
           smegas: res.data
         });
-        console.log(this.state.smegas);
       })
       .catch(err => console.log(err));
   }
   render() {
     let recentSmegasMarkup = this.state.smegas ? (
-      this.state.smegas.map(smega => <p>{smega.body}</p>)
+      this.state.smegas.map(smega => (
+        <Smega smega={smega} key={smega.smegaId} />
+      ))
     ) : (
       <p>Loading...</p>
     );
     return (
-      <Grid container spacing={16}>
+      <Grid container spacing={10}>
         <Grid item sm={8} xs={12}>
           {recentSmegasMarkup}
         </Grid>
