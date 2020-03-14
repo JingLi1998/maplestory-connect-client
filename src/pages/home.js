@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 
 import Smega from '../components/Smega';
 
-export class home extends Component {
+class home extends Component {
   state = {
     smegas: null
   };
