@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 
 // MUI Stuff
 import Grid from '@material-ui/core/Grid';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Redux Stuff
 import { connect } from 'react-redux';
@@ -54,6 +54,7 @@ class login extends Component {
       ui: { loading }
     } = this.props;
     const { errors } = this.state;
+
     return (
       <Grid container className={classes.form}>
         <Grid item sm />
@@ -119,7 +120,7 @@ class login extends Component {
 
 login.propTypes = {
   classes: PropTypes.object.isRequired,
-  loginUser: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   ui: PropTypes.object.isRequired
 };

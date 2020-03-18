@@ -1,30 +1,24 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
+import PropTypes from 'prop-types';
 
-import Smega from '../components/Smega';
+import Smega from '../components/smega/Smega';
+import Profile from '../components/profile/Profile';
+import SmegaSkeleton from '../util/SmegaSkeleton';
+
+import { connect } from 'react-redux';
+import { getSmegas } from '../redux/actions/dataActions';
 
 class home extends Component {
-  state = {
-    smegas: null
-  };
   componentDidMount() {
-    axios
-      .get('/smegas')
-      .then(res => {
-        this.setState({
-          smegas: res.data
-        });
-      })
-      .catch(err => console.log(err));
+    this.props.getSmegas();
   }
   render() {
-    let recentSmegasMarkup = this.state.smegas ? (
-      this.state.smegas.map(smega => (
-        <Smega smega={smega} key={smega.smegaId} />
-      ))
+    const { smegas, loading } = this.props.data;
+    let recentSmegasMarkup = !loading ? (
+      smegas.map(smega => <Smega smega={smega} key={smega.smegaId} />)
     ) : (
-      <p>Loading...</p>
+      <SmegaSkeleton />
     );
     return (
       <Grid container spacing={10}>
@@ -32,11 +26,20 @@ class home extends Component {
           {recentSmegasMarkup}
         </Grid>
         <Grid item sm={4} xs={12}>
-          <p>Profile...</p>
+          <Profile />
         </Grid>
       </Grid>
     );
   }
 }
 
-export default home;
+home.propTypes = {
+  getSmegas: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  data: state.data
+});
+
+export default connect(mapStateToProps, { getSmegas })(home);
